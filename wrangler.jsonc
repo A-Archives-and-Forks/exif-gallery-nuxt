@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "exif-gallery",
+  "name": "exif-gallery-nuxt",
   "main": "./.output/server/index.mjs",
   "compatibility_date": "2026-01-26",
   "assets": {
