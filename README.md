@@ -1,88 +1,219 @@
+<div align="center">
+
 # EXIF Gallery Nuxt
+
+**A modern, AI-powered photo gallery built on the edge**
 
 [English](README.md) | [简体中文](README_zh.md)
 
-A full-stack photo album solution that integrates AI intelligent processing, browser image compression, and other functions.
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
+[![Nuxt](https://img.shields.io/badge/Nuxt-4.0-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com/)
+[![Vue](https://img.shields.io/badge/Vue-3.5-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+
+</div>
+
+---
 
 ![exif-gallery-nuxt](./public/exif-gallery-nuxt.jpg)
 
-[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://admin.hub.nuxt.com/new)
+## ✨ Features
 
-## Features
+- 🧠 **AI-Powered Image Intelligence** - Integration with OpenAI and Gemini for semantic analysis and intelligent image descriptions
+- 🖼️ **Smart Image Processing** - Browser-side compression supporting JPEG, WebP, and AVIF formats with automatic thumbnail generation
+- 💾 **Edge-Native Storage** - Cloudflare R2 object storage with D1 database for optimal performance and global edge deployment
+- 📊 **Complete EXIF Management** - Full extraction and display of image metadata including camera settings, location data, and timestamps
+- 🏷️ **Flexible Tagging System** - Organize photos with custom tags and filter by categories
+- 🎨 **Modern User Experience** - Responsive design with smooth view transitions and beautiful UI components
+- 🔐 **Secure Admin Panel** - Built-in authentication system for secure photo management and uploads
 
-- 📷 Image upload and display with [`hubBlob()`](http://hub.nuxt.com/docs/storage/blob)
-- 🌐 Cloud Storage: Blob powered by NuxtHub (cloudflare R2)
-- 🤖 AI Integration: Support for OpenAI and Gemini for intelligent image processing
-- 🗜️ Image Compression: Multiple format support (JPEG, WebP, AVIF) with JSQuash
-- 🎨 Modern UI: Beautiful components with shadcn-vue and inspira-ui
-- 🏃🏻 [View transition API](https://developer.chrome.com/docs/web-platform/view-transitions) The View Transitions API provides a mechanism for easily creating animated transitions between different DOM states while also updating the DOM contents in a single step
-- 🔑 [Nuxt Auth Utils](https://github.com/Atinux/nuxt-auth-utils) Minimalist Authentication module for Nuxt exposing Vue composables and server utils
+## 🚀 Quick Start
 
-## Stack
+### Prerequisites
 
-- [NuxtHub](https://hub.nuxt.com) - A Nuxt toolkit to build fullstack applications on the edge
-- [UnoCSS](https://unocss.dev/) - The instant on-demand atomic CSS engine
-- [shadcn-vue](https://www.shadcn-vue.com/) - Beautifully designed components built with Reka UI and Tailwind CSS
-- [inspira-ui](https://inspira-ui.com/) - Collection of beautiful UI components to build stunning animated interfaces
-- [VueUse](https://github.com/antfu/vueuse) - Collection of useful composition APIs
-- [ESLint](https://eslint.org/) with [@nuxt/eslint-config](https://github.com/nuxt/eslint), single quotes, no semi
-- [TypeScript](https://www.typescriptlang.org/)
-
-### Deploy
-
-You can deploy this project on your Cloudflare account for free using [NuxtHub](https://hub.nuxt.com).
-
-1. Make sure you have a Cloudflare account and R2 plan.
-2. fork this repository to your own GitHub account.
-3. Go to [NuxtHub](https://hub.nuxt.com) and sign in with your GitHub account.
-4. Click on the "Deploy" button and select your forked repository.
-5. Configure the environment variables as needed.
-
-> [!NOTE]
-> If Github Actions created but not triggered, you can create a new commit to trigger the deployment (like modify README.md and commit).
+- [Node.js](https://nodejs.org/) 18.x or higher
+- [pnpm](https://pnpm.io/) (recommended)
 
 ```bash
-npx nuxthub deploy
-```
+# Install pnpm (if not already installed)
+corepack enable pnpm
 
-It's also possible to leverage Cloudflare Pages CI for deploying, learn more about the different options on <https://hub.nuxt.com/docs/getting-started/deploy>
+# Clone the repository
+git clone https://github.com/wiidede/exif-gallery-nuxt.git
+cd exif-gallery-nuxt
 
-Learn more about remote storage on <https://hub.nuxt.com/docs/getting-started/remote-storage>
+# Install dependencies
+pnpm install
 
-## Environment Variables
-
-- `NUXT_ADMIN_PASSWORD` (required) - A password to access the admin panel and upload images, will default to `admin` if not provided.
-- `NUXT_SESSION_PASSWORD` (required) - A secret key for session encryption used by [nuxt-auth-utils](https://github.com/Atinux/nuxt-auth-utils), will be generated automatically if not provided in development mode.
-- `NUXT_PUBLIC_TITLE` - The title of the application, will default to `Exif Gallery Nuxt` if not provided.
-- `NUXT_PUBLIC_DESCRIPTION` - The description of the application, will default to `A full-stack photo album solution that integrates AI intelligent processing, browser image compression, and other functions` if not provided.
-
-## Setup
-
-1. Clone this repository to your local machine.
-2. Install dependencies using the command `pnpm install` or your favorite package manager.
-3. Run the application with the command `pnpm dev` or your favorite package manager.
-
-> If you don't have pnpm installed, run: `corepack enable pnpm`
-
-## Development
-
-```bash
+# Start development server
 pnpm dev
 ```
 
-### Remote Storage
+Visit `http://localhost:3000` to see the application.
 
-Once you deployed your project, you can connect to your remote database locally running:
+## 🛠️ Tech Stack
+
+- **Framework**: [Nuxt 4](https://nuxt.com/) - The Intuitive Vue Framework
+- **Edge Platform**: [NuxtHub](https://hub.nuxt.com) - Build fullstack applications on the edge
+- **Database**: [D1](https://developers.cloudflare.com/d1/) - SQLite at the edge
+- **Storage**: [R2](https://developers.cloudflare.com/r2/) - S3-compatible object storage
+- **Styling**: [UnoCSS](https://unocss.dev/) - The instant on-demand atomic CSS engine
+- **UI Components**: [shadcn-vue](https://www.shadcn-vue.com/) + [inspira-ui](https://inspira-ui.com/)
+- **State Management**: [Pinia](https://pinia.vuejs.org/)
+- **Validation**: [vee-validate](https://vee-validate.logaretm.com/) + [Zod](https://zod.dev/)
+- **AI**: [OpenAI](https://openai.com/) + [Google Gemini](https://gemini.google.com/)
+- **Code Quality**: [TypeScript](https://www.typescriptlang.org/) + [ESLint](https://eslint.org/)
+
+## 📦 Deployment
+
+### Deploy to Cloudflare Workers
+
+This project is designed for deployment on Cloudflare Workers with NuxtHub.
+
+#### Step 1: Create Cloudflare Resources
+
+1. **Create D1 Database**
+   - Navigate to **Storage & Databases** → **D1 SQL Database** in Cloudflare Dashboard
+   - Create a database and note the **Database ID**
+
+2. **Create R2 Bucket**
+   - Navigate to **Storage & Databases** → **R2 Object Storage**
+   - Create a bucket and note the **bucket name**
+
+#### Step 2: Configure Deployment
+
+Update `wrangler.jsonc` with your Cloudflare resource IDs:
+
+```jsonc
+{
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_id": "YOUR_DATABASE_ID"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BLOB",
+      "bucket_name": "YOUR_BUCKET_NAME"
+    }
+  ]
+}
+```
+
+#### Step 3: Deploy via Cloudflare Dashboard
+
+1. Go to **Workers & Pages** → **Create application** → **Connect to Git**
+2. Select your forked repository
+3. Configure build settings:
+   - **Build command**: `pnpm run build`
+   - **Deploy command**: `npx wrangler deploy`
+4. Add environment variables:
+   - `NUXT_SESSION_PASSWORD` - Generate a secure random string
+   - `NUXT_ADMIN_PASSWORD` - Set your admin panel password
+5. Click **Deploy**
+
+NuxtHub will automatically configure D1 and R2 bindings based on `wrangler.jsonc`.
+
+### Manual Deployment
+
+```bash
+# Build for production
+pnpm run build
+
+# Deploy to Cloudflare Workers
+npx wrangler deploy
+```
+
+### Remote Development
+
+Connect to your remote Cloudflare resources locally:
 
 ```bash
 pnpm dev --remote
 ```
 
-## Contribution
+### Migration from NuxtHub Admin
 
-Contributions are welcome! Feel free to open an issue to report a bug or submit a feature request via a pull request.
+For users who previously deployed using NuxtHub Admin:
 
-## Credits
+1. **Update your fork** to get the latest changes:
 
-Thanks to [exif-photo-blog](https://github.com/sambecker/exif-photo-blog)
-Thanks to [nuxt-image-gallery](https://github.com/Flosciante/nuxt-image-gallery)
+2. **Get existing resources** from your NuxtHub project:
+   - D1 database ID
+   - R2 bucket name
+
+3. **Update `wrangler.jsonc`** with your existing resources:
+   ```jsonc
+   {
+     "d1_databases": [{ "binding": "DB", "database_id": "YOUR_EXISTING_DATABASE_ID" }],
+     "r2_buckets": [{ "binding": "BLOB", "bucket_name": "YOUR_EXISTING_BUCKET_NAME" }]
+   }
+   ```
+   Commit and push this change.
+
+4. **Create new Worker** by following steps 2-3 in the deployment section above
+
+5. **Configure environment variables** from your old project
+
+6. **Deploy** - your data remains in the same D1 database and R2 bucket
+
+## 🔧 Configuration
+
+### Environment Variables
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `NUXT_ADMIN_PASSWORD` | Yes | `admin` | Admin panel access password |
+| `NUXT_SESSION_PASSWORD` | Yes | Auto-generated | Session encryption key |
+| `NUXT_PUBLIC_TITLE` | No | `Exif Gallery Nuxt` | Application title |
+| `NUXT_PUBLIC_DESCRIPTION` | No | See default | Application description |
+
+## 📁 Project Structure
+
+```
+exif-gallery-nuxt/
+├── app/                    # Frontend application
+│   ├── components/         # Vue components
+│   ├── composables/       # Vue composables
+│   ├── pages/             # Application pages
+│   ├── stores/            # Pinia stores
+│   ├── utils/             # Utility functions
+│   └── workers/           # Web Workers
+├── server/                # Backend API
+│   ├── api/               # API routes
+│   ├── db/                # Database schema
+│   └── utils/             # Server utilities
+└── types/                 # TypeScript definitions
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [exif-photo-blog](https://github.com/sambecker/exif-photo-blog) - Inspiration for EXIF handling
+- [nuxt-image-gallery](https://github.com/Flosciante/nuxt-image-gallery) - Gallery implementation reference
+- [NuxtHub](https://hub.nuxt.com) - Edge deployment platform
+- [shadcn-vue](https://www.shadcn-vue.com/) - Beautiful UI components
+- [inspira-ui](https://inspira-ui.com/) - Animated UI components
+
+---
+
+<div align="center">
+
+Made with ❤️ by [wiidede](https://github.com/wiidede)
+
+</div>
