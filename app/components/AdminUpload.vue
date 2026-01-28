@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import pLimit from 'p-limit'
 
-definePageMeta({
-  layout: 'admin',
-  middleware: 'auth',
-})
-
 interface FileEntry {
   id: number
   file: File
