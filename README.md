@@ -91,7 +91,8 @@ Update `wrangler.jsonc` with your Cloudflare resource IDs:
     {
       "binding": "DB",
       "database_name": "exif-gallery-nuxt",
-      "database_id": "YOUR_DATABASE_ID"
+      "database_id": "YOUR_DATABASE_ID",
+      "migrations_dir": "server/db/migrations/sqlite"
     }
   ],
   "r2_buckets": [
