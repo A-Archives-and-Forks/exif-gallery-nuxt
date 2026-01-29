@@ -92,7 +92,8 @@ Update `wrangler.jsonc` with your Cloudflare resource IDs:
       "binding": "DB",
       "database_name": "exif-gallery-nuxt",
       "database_id": "YOUR_DATABASE_ID",
-      "migrations_dir": "server/db/migrations/sqlite"
+      "migrations_dir": "server/db/migrations/sqlite",
+      "migrations_table": "_hub_migrations"
     }
   ],
   "r2_buckets": [
@@ -108,9 +109,7 @@ Update `wrangler.jsonc` with your Cloudflare resource IDs:
 
 **Important**: Cloudflare D1 database cannot be connected during build, so migrations are **not automatically applied**. You must manually run migrations to create the table structure.
 
-Here are several ways to run migrations:
-
-**Method 1: Using GitHub Actions (Recommended, Automated)**
+**Using GitHub Actions (Recommended, Automated)**
 
 The project includes a `.github/workflows/migrate.yml` file. You can:
 
@@ -120,14 +119,11 @@ The project includes a `.github/workflows/migrate.yml` file. You can:
 
 2. Push code to the `main` branch, or manually trigger the `Database Migration` workflow in GitHub Actions
 
-> **Important**: The `wrangler d1 migrations apply` command is **idempotent** and will only execute **unapplied migrations**. Even if you run this command on every deployment, if the migration files haven't changed, it will safely skip already-applied migrations without duplication or errors.
-
-**Method 2: Using Wrangler CLI (Requires Local Node.js)**
-
-```bash
-# Apply migrations to remote D1 database
-npx wrangler d1 migrations apply exif-gallery-nuxt --remote
-```
+> [!NOTE]
+> This project adopts a separated migration management strategy:
+> - Local Development: Migrations are automatically managed by NuxtHub and recorded in the `_hub_migrations` table.
+> - Cloud Deployment: Migrations are managed via GitHub Actions using Wrangler, also recorded in the `_hub_migrations` table, but with an additional `.sql` file extension compared to NuxtHub migrations.
+> - Note: Do not manually run Wrangler migration commands during local development, as those files lack the `.sql` suffix.
 
 #### Step 3: Deploy via Cloudflare Dashboard
 
