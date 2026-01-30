@@ -35,6 +35,9 @@ importers:
       '@nuxthub/core':
         specifier: 0.10.4
         version: 0.10.4(db0@0.3.4(@libsql/client@0.17.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260124.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)))(ioredis@5.9.2)(magicast@0.5.1)(synckit@0.11.12)(typescript@5.9.3)(vue-tsc@3.2.4(typescript@5.9.3))
+      '@nuxtjs/device':
+        specifier: 4.0.0
+        version: 4.0.0
       '@paralleldrive/cuid2':
         specifier: ^3.3.0
         version: 3.3.0
@@ -1780,6 +1783,9 @@ packages:
 
   '@nuxtjs/color-mode@4.0.0':
     resolution: {integrity: sha512-xyaVR/TPLdMuRa2VOgH6b75jvmFEsn9QKL6ISldaAw38ooFJfWY1ts2F3ye43wcT/goCbcuvPuskF2f8yUZhlw==}
+
+  '@nuxtjs/device@4.0.0':
+    resolution: {integrity: sha512-Tkbvde/GInmigbS/n3X3X+qXJWi6hsYrViKpZrakaBBYY3NbGYJb0c8aVxd3vI636HBbOhu0I39rv7MSjP7w8Q==}
 
   '@nuxtjs/i18n@10.2.1':
     resolution: {integrity: sha512-/CHAIpYbFgobxeMsnKcD8xBUHxBpqipRMjaI3ol9MVZKscJM+IetYdNL9lGNFdEtlxzkV8COxnoa60rE4sPjuQ==}
@@ -9188,6 +9194,10 @@ snapshots:
       semver: 7.7.3
     transitivePeerDependencies:
       - magicast
+
+  '@nuxtjs/device@4.0.0':
+    dependencies:
+      defu: 6.1.4
 
   '@nuxtjs/i18n@10.2.1(db0@0.3.4(@libsql/client@0.17.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260124.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.9.2)(magicast@0.5.1)(rollup@4.56.0)(vue@3.5.27(typescript@5.9.3))':
     dependencies:

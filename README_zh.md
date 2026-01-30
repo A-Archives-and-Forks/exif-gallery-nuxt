@@ -193,6 +193,7 @@ pnpm dev --remote
 | `NUXT_SESSION_PASSWORD` | 是 | 自动生成 | 会话加密密钥（至少32位） |
 | `NUXT_PUBLIC_TITLE` | 否 | `Exif Gallery Nuxt` | 应用标题 |
 | `NUXT_PUBLIC_DESCRIPTION` | 否 | 一个集成了 AI 智能处理、浏览器图片压缩等功能的全栈相册解决方案 | 应用描述 |
+| `NUXT_PUBLIC_DISABLE_3D_CARD_DEFAULT` | 否 | `false` | 是否默认禁用 3D 卡片效果（设为 `true`默认禁用） |
 
 ## 📁 项目结构
 

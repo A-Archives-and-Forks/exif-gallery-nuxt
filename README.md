@@ -192,6 +192,7 @@ For users who previously deployed using NuxtHub Admin:
 | `NUXT_SESSION_PASSWORD` | Yes | -- | Session encryption key(at least 32 characters) |
 | `NUXT_PUBLIC_TITLE` | No | `Exif Gallery Nuxt` | Application title |
 | `NUXT_PUBLIC_DESCRIPTION` | No | `A full-stack photo album solution that integrates AI intelligent processing, browser image compression, and other functions` | Application description |
+| `NUXT_PUBLIC_DISABLE_3D_CARD_DEFAULT` | No | `false` | Whether to disable 3D card effect by default (set to `true` to disable) |
 
 ## 📁 Project Structure
 

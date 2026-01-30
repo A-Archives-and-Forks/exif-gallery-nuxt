@@ -1,8 +1,12 @@
 export function useTheme(init = false) {
   const theme = useLocalStorage('shadcn-theme', 'blue')
   const radius = useLocalStorage('shadcn-radius', '0.5')
+  const config = useRuntimeConfig()
+  const { isDesktop } = useDevice()
   const disable3DCard = useCookie<boolean>('disable-3d-card', {
-    default: () => isTouchDevice,
+    default: () => {
+      return ({ true: true, false: false }[config.public.disable3DCardDefault] ?? !isDesktop)
+    },
     sameSite: 'lax',
     maxAge: 60 * 60 * 24 * 365,
   })
