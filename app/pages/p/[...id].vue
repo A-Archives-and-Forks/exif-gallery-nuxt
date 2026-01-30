@@ -5,6 +5,7 @@ definePageMeta({
 
 const route = useRoute()
 const localePath = useLocalePath()
+const uiStore = useUIStore()
 
 const id = route.params.id?.[0]
 if (!id) {
@@ -23,17 +24,30 @@ function onDeleted() {
   photosStore.clear()
   navigateTo(localePath('/'))
 }
+
+const { idle } = useIdle(2000, { initialState: true })
+
+watch(idle, (value) => {
+  uiStore.idle = value
+}, { immediate: true })
+
+uiStore.fullscreen = true
+onUnmounted(() => {
+  uiStore.fullscreen = false
+})
 </script>
 
 <template>
   <section
     v-if="photo"
-    class="p-4 relative"
+    class="relative"
   >
     <PhotoItem
       :photo="photo"
       :logged-in="loggedIn"
       image-class="current-image"
+      :fullscreen="true"
+      :idle="idle"
       editable
       @deleted="onDeleted()"
     />

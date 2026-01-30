@@ -6,13 +6,16 @@ defineProps<{
   photo?: IPhoto
   imageClass?: HTMLAttributes['class']
   mini?: boolean
+  fullscreen?: boolean
 }>()
 </script>
 
 <template>
   <div
-    class="max-h-[calc(100vh-5rem)]"
-    :class="mini ? 'h-full' : 'w-full'"
+    :class="[
+      fullscreen ? 'h-screen w-screen' : 'max-h-[calc(100vh-5rem)]',
+      mini ? 'h-full' : 'w-full',
+    ]"
     :style="{ aspectRatio: !mini && photo?.aspectRatio || undefined }"
   >
     <picture v-if="photo">
@@ -20,7 +23,7 @@ defineProps<{
       <source v-if="photo.webp" :srcset="`/photos/${photo.webp}`" type="image/webp">
       <img
         :src="`/photos/${photo.jpeg || photo.webp || photo.avif}`"
-        :class="cn('h-full m-auto rounded-lg object-contain', imageClass)"
+        :class="cn('h-full m-auto object-contain', fullscreen ? 'rounded-none' : 'rounded-lg', imageClass)"
       >
     </picture>
   </div>

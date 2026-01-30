@@ -20,10 +20,16 @@ async function clearSession() {
   await clear().finally(() => disconnect.value = false)
   navigateTo(localePath('/admin/login'))
 }
+
+const uiStore = useUIStore()
+const { fullscreen, idle } = toRefs(uiStore)
 </script>
 
 <template>
-  <header class="px-4 border-b border-dashed bg-background/60 flex h-12 w-full items-center top-0 justify-between sticky z-50 backdrop-blur">
+  <header
+    class="px-4 border-b border-dashed bg-background/60 flex h-12 w-full transition-transform duration-300 items-center top-0 justify-between z-50 backdrop-blur"
+    :class="fullscreen ? (idle ? 'absolute -translate-y-full' : 'absolute translate-y-0') : 'sticky'"
+  >
     <nav div class="flex flex-auto min-w-0 items-center justify-items-start">
       <NuxtLinkLocale to="/" class="font-medium me-2 flex-[0_1_auto] min-w-0 truncate">
         <Logo class="text-primary op-80 size-6" />
