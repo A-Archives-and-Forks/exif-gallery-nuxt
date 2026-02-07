@@ -122,6 +122,7 @@ pnpm dev
 
 > [!NOTE]
 > 本项目采用分离的迁移管理策略：
+>
 > - **本地开发**：NuxtHub 自动管理，在 `_hub_migrations` 表中记录
 > - **云端部署**：GitHub Actions 使用 Wrangler 管理，`_hub_migrations` 表中记录，相比NuxtHub多`.sql`后缀
 > - **注意**：本地开发请勿手动运行 wrangler 迁移命令，因为没有`.sql`后缀
@@ -168,32 +169,34 @@ pnpm dev --remote
    - D1 数据库 ID
    - R2 存储桶名称
 
-2. **更新 `wrangler.jsonc`** 使用现有资源：
+3. **更新 `wrangler.jsonc`** 使用现有资源：
+
    ```jsonc
    {
      "d1_databases": [{ "binding": "DB", "database_id": "YOUR_EXISTING_DATABASE_ID" }],
      "r2_buckets": [{ "binding": "BLOB", "bucket_name": "YOUR_EXISTING_BUCKET_NAME" }]
    }
    ```
+
    提交并推送此更改。
 
-3. **创建新的 Worker**（参考上方部署步骤 2-3）
+4. **创建新的 Worker**（参考上方部署步骤 2-3）
 
-4. **配置环境变量**（从旧项目复制，参考上方部署步骤 4）
+5. **配置环境变量**（从旧项目复制，参考上方部署步骤 4）
 
-5. **部署** - 数据仍保留在原本的 D1 数据库和 R2 存储桶中
+6. **部署** - 数据仍保留在原本的 D1 数据库和 R2 存储桶中
 
 ## 🔧 配置
 
 ### 环境变量
 
-| 变量 | 必需 | 默认值 | 描述 |
-|------|------|--------|------|
-| `NUXT_ADMIN_PASSWORD` | 是 | `admin` | 管理后台访问密码 |
-| `NUXT_SESSION_PASSWORD` | 是 | 自动生成 | 会话加密密钥（至少32位） |
-| `NUXT_PUBLIC_TITLE` | 否 | `Exif Gallery Nuxt` | 应用标题 |
-| `NUXT_PUBLIC_DESCRIPTION` | 否 | 一个集成了 AI 智能处理、浏览器图片压缩等功能的全栈相册解决方案 | 应用描述 |
-| `NUXT_PUBLIC_DISABLE_3D_CARD_DEFAULT` | 否 | `false` | 是否默认禁用 3D 卡片效果（设为 `true`默认禁用） |
+| 变量                                  | 必需 | 默认值                                                         | 描述                                            |
+| ------------------------------------- | ---- | -------------------------------------------------------------- | ----------------------------------------------- |
+| `NUXT_ADMIN_PASSWORD`                 | 是   | `admin`                                                        | 管理后台访问密码                                |
+| `NUXT_SESSION_PASSWORD`               | 是   | 自动生成                                                       | 会话加密密钥（至少32位）                        |
+| `NUXT_PUBLIC_TITLE`                   | 否   | `Exif Gallery Nuxt`                                            | 应用标题                                        |
+| `NUXT_PUBLIC_DESCRIPTION`             | 否   | 一个集成了 AI 智能处理、浏览器图片压缩等功能的全栈相册解决方案 | 应用描述                                        |
+| `NUXT_PUBLIC_DISABLE_3D_CARD_DEFAULT` | 否   | `false`                                                        | 是否默认禁用 3D 卡片效果（设为 `true`默认禁用） |
 
 ## 📁 项目结构
 

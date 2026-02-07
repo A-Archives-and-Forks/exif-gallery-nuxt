@@ -121,6 +121,7 @@ The project includes a `.github/workflows/migrate.yml` file. You can:
 
 > [!NOTE]
 > This project adopts a separated migration management strategy:
+>
 > - Local Development: Migrations are automatically managed by NuxtHub and recorded in the `_hub_migrations` table.
 > - Cloud Deployment: Migrations are managed via GitHub Actions using Wrangler, also recorded in the `_hub_migrations` table, but with an additional `.sql` file extension compared to NuxtHub migrations.
 > - Note: Do not manually run Wrangler migration commands during local development, as those files lack the `.sql` suffix.
@@ -168,12 +169,14 @@ For users who previously deployed using NuxtHub Admin:
    - R2 bucket name
 
 3. **Update `wrangler.jsonc`** with your existing resources:
+
    ```jsonc
    {
      "d1_databases": [{ "binding": "DB", "database_id": "YOUR_EXISTING_DATABASE_ID" }],
      "r2_buckets": [{ "binding": "BLOB", "bucket_name": "YOUR_EXISTING_BUCKET_NAME" }]
    }
    ```
+
    Commit and push this change.
 
 4. **Create new Worker** by following steps 2-3 in the deployment section above
@@ -186,13 +189,13 @@ For users who previously deployed using NuxtHub Admin:
 
 ### Environment Variables
 
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `NUXT_ADMIN_PASSWORD` | Yes | `admin` | Admin panel access password |
-| `NUXT_SESSION_PASSWORD` | Yes | -- | Session encryption key(at least 32 characters) |
-| `NUXT_PUBLIC_TITLE` | No | `Exif Gallery Nuxt` | Application title |
-| `NUXT_PUBLIC_DESCRIPTION` | No | `A full-stack photo album solution that integrates AI intelligent processing, browser image compression, and other functions` | Application description |
-| `NUXT_PUBLIC_DISABLE_3D_CARD_DEFAULT` | No | `false` | Whether to disable 3D card effect by default (set to `true` to disable) |
+| Variable                              | Required | Default                                                                                                                       | Description                                                             |
+| ------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `NUXT_ADMIN_PASSWORD`                 | Yes      | `admin`                                                                                                                       | Admin panel access password                                             |
+| `NUXT_SESSION_PASSWORD`               | Yes      | --                                                                                                                            | Session encryption key(at least 32 characters)                          |
+| `NUXT_PUBLIC_TITLE`                   | No       | `Exif Gallery Nuxt`                                                                                                           | Application title                                                       |
+| `NUXT_PUBLIC_DESCRIPTION`             | No       | `A full-stack photo album solution that integrates AI intelligent processing, browser image compression, and other functions` | Application description                                                 |
+| `NUXT_PUBLIC_DISABLE_3D_CARD_DEFAULT` | No       | `false`                                                                                                                       | Whether to disable 3D card effect by default (set to `true` to disable) |
 
 ## 📁 Project Structure
 
