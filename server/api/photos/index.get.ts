@@ -1,4 +1,4 @@
-import { and, eq, sql } from 'drizzle-orm'
+import { and, eq, like, sql } from 'drizzle-orm'
 
 export default eventHandler(async (event) => {
   const query = getQuery(event)
@@ -9,6 +9,8 @@ export default eventHandler(async (event) => {
     orderBy = 'takenAt',
     order = 'desc',
     tag,
+    camera,
+    lens,
   } = query
 
   // 转换为数字
@@ -18,6 +20,25 @@ export default eventHandler(async (event) => {
 
   if (hidden !== undefined)
     conditions.push(eq(schema.photo.hidden, hidden === 'true'))
+
+  // 相机筛选：格式为 "make|model" 或 "make"
+  if (camera) {
+    const cameraStr = String(camera)
+    const parts = cameraStr.split('|')
+    if (parts.length === 2) {
+      const [make, model] = parts
+      conditions.push(eq(schema.photo.make, make))
+      conditions.push(eq(schema.photo.model, model))
+    }
+    else {
+      conditions.push(like(schema.photo.make, `%${cameraStr}%`))
+    }
+  }
+
+  // 镜头筛选
+  if (lens) {
+    conditions.push(eq(schema.photo.lensModel, String(lens)))
+  }
 
   // 使用子查询而不是多次查询
   let photoIdsSubquery = null

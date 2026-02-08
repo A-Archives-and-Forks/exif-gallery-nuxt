@@ -24,6 +24,26 @@ const photoWithExif = computed(() => photo.value.make || photo.value.model || ph
 
 const isMini = computed(() => mdScreen.value && mini)
 
+const localPath = useLocalePath()
+
+// 生成相机页面链接（使用 localPath 拼接避免编码问题）
+const cameraLink = computed(() => {
+  const p = photo.value
+  if (!p.make && !p.model)
+    return null
+  const make = p.make || ''
+  const model = p.model || ''
+  return `${localPath('/camera')}/${encodeURIComponent(`${make}|${model}`)}`
+})
+
+// 生成镜头页面链接（使用 localPath 拼接避免编码问题）
+const lensLink = computed(() => {
+  const p = photo.value
+  if (!p.lensModel)
+    return null
+  return `${localPath('/lens')}/${encodeURIComponent(p.lensModel)}`
+})
+
 const { deletingPhoto, deletePhoto: _deletePhoto } = useDeletePhoto()
 const showDeletePopover = ref(false)
 function deletePhoto(id: string) {
@@ -106,24 +126,40 @@ function deletePhoto(id: string) {
           <div class="flex flex-col gap-2">
             <span class="text-0.8em op-66" data-allow-mismatch="text">{{ formatDate(photo.takenAt) }}</span>
             <div>
-              <div v-if="photoWithExif" class="flex gap-1 items-center">
-                <div class="i-lucide-camera op-70" />
+              <NuxtLink
+                v-if="photoWithExif && cameraLink"
+                :to="cameraLink"
+                class="m--1 p-1 rounded-lg op-80 flex gap-1 w-fit transition-colors items-center hover:bg-muted"
+              >
+                <div class="i-lucide-camera op-70 flex-shrink-0" />
+                <span>{{ formatCameraText(photo) }}</span>
+              </NuxtLink>
+              <div v-else-if="photoWithExif" class="flex gap-1 items-center">
+                <div class="i-lucide-camera op-70 flex-shrink-0" />
                 <span>{{ formatCameraText(photo) }}</span>
               </div>
-              <div v-if="photoWithExif" class="flex gap-1 items-center">
-                <div class="i-lucide-aperture op-70" />
+              <NuxtLink
+                v-if="photoWithExif && lensLink"
+                :to="lensLink"
+                class="m--1 p-1 rounded-lg op-80 flex gap-1 w-fit transition-colors items-center hover:bg-muted"
+              >
+                <div class="i-lucide-aperture op-70 flex-shrink-0" />
+                <span>{{ formatLensText(photo) }}</span>
+              </NuxtLink>
+              <div v-else-if="photoWithExif" class="flex gap-1 items-center">
+                <div class="i-lucide-aperture op-70 flex-shrink-0" />
                 <span>{{ formatLensText(photo) }}</span>
               </div>
             </div>
             <div class="flex flex-wrap gap-x-2 gap-y-1 md:flex-col">
-              <NuxtLinkLocale
+              <NuxtLink
                 v-for="tag in (photo.tags ? photo.tags.split(',') : [])"
                 :key="tag"
-                :to="`/tag/${tag}`"
+                :to="`${localPath('/tag')}/${encodeURIComponent(tag)}`"
                 class="m--1 p-1 rounded-lg op-80 w-fit transition-colors hover:bg-muted"
               >
                 <Tag :label="tag" />
-              </NuxtLinkLocale>
+              </NuxtLink>
             </div>
           </div>
           <div
