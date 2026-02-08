@@ -99,7 +99,7 @@ function openEditDialog(photo: IPhoto) {
           </div>
           <div class="flex flex-wrap gap-x-1 gap-y-0 justify-center">
             <Tag
-              v-for="tag in photo.tags?.split(',') || []"
+              v-for="tag in (photo.tags ? photo.tags.split(',') : [])"
               :key="tag" :label="tag"
               class="text-sm text-muted-foreground"
             />

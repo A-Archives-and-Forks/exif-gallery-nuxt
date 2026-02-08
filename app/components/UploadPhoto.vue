@@ -73,7 +73,7 @@ onUnmounted(() => {
           <div class="flex flex-wrap gap-2 items-center">
             <span class="mr-2">{{ file.name }}</span>
             <Tag
-              v-for="tag in photo.tags?.split(',') || []"
+              v-for="tag in (photo.tags ? photo.tags.split(',') : [])"
               :key="tag"
               :label="tag"
             />
@@ -134,7 +134,7 @@ onUnmounted(() => {
     </Collapsible>
     <Button
       variant="outline"
-      class="p-0 h-6 w-12 translate-x--50% translate-y-50% bottom-0 left-50% absolute"
+      class="p-0 h-6 w-12 translate-x--50% translate-y-50% bottom-0 left-50% absolute bg-card!"
       @click="isOpen = !isOpen"
     >
       <div :class="isOpen ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" />

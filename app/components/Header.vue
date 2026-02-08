@@ -28,7 +28,7 @@ const route = useRoute()
 
 // 只在首页、grid 页和 admin/index 页显示排序按钮（使用 route.name 支持多语言）
 const showSortButton = computed(() => {
-  const name = String(route.name)?.split('_')[0]
+  const name = String(route.name).split('_')[0]
   return ['index', 'grid', 'admin'].includes(name as string)
 })
 </script>
@@ -64,16 +64,18 @@ const showSortButton = computed(() => {
     <nav class="flex items-center">
       <HeaderSortMenu v-if="showSortButton" />
       <NuxtLinkLocale to="https://github.com/wiidede/exif-gallery-nuxt" target="_blank">
-        <TooltipIconButton :label="$t('header.github')" icon="i-lucide-github op-50" />
+        <TooltipIconButton :label="$t('header.github')" icon="i-lucide-github op-50" variant="ghost" size="icon" />
       </NuxtLinkLocale>
       <NuxtLinkLocale v-if="showAdmin" to="/admin">
-        <TooltipIconButton :label="$t('header.admin')" icon="i-lucide-server-cog op-50" />
+        <TooltipIconButton :label="$t('header.admin')" icon="i-lucide-server-cog op-50" variant="ghost" size="icon" />
       </NuxtLinkLocale>
       <TooltipIconButton
         v-if="showLogout && loggedIn"
         :loading="disconnect"
         :label="$t('header.logout')"
         icon="i-lucide-power text-red"
+        variant="ghost"
+        size="icon"
         @click="clearSession()"
       />
       <ThemePopover class="flex-shrink-0" />

@@ -41,6 +41,11 @@ export default defineNuxtConfig({
       prefix: '',
       extensions: ['vue'],
     },
+    {
+      path: '~/components/ui-pro',
+      prefix: '',
+      extensions: ['vue'],
+    },
     '~/components',
   ],
   imports: {

@@ -10,6 +10,8 @@ const { orderBy, order, setSort } = usePhotoSort()
       <TooltipIconButton
         :label="$t('header.sort')"
         :icon="order === 'desc' ? 'i-lucide-arrow-down-wide-narrow' : 'i-lucide-arrow-up-wide-narrow'"
+        variant="ghost"
+        size="icon"
       />
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end">

@@ -105,7 +105,7 @@ basic_info:
   photo_title: 标题
   description: 描述
   tags: 标签
-  tags_placeholder: 添加标签...
+  tags_placeholder: 添加标签(↩︎)
   semantic_description: 语义描述
 camera_lens:
   title: 相机镜头

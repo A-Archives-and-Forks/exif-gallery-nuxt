@@ -7,6 +7,7 @@ export default antfu({
   formatters: true,
   ignores: [
     'server/db/migrations/*',
+    'app/components/ui/**/*',
   ],
   overrides: {
     typescript: {

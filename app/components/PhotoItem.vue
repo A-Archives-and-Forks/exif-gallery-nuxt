@@ -81,6 +81,8 @@ function deletePhoto(id: string) {
                 v-if="loggedIn"
                 :label="$t('button.edit')"
                 icon="i-lucide-edit text-muted-foreground"
+                variant="ghost"
+                size="icon"
               />
             </EditPhotoDialog>
             <DeleteConfirmPopover
@@ -92,6 +94,8 @@ function deletePhoto(id: string) {
               <TooltipIconButton
                 :label="$t('button.delete')"
                 icon="i-lucide-trash text-muted-foreground"
+                variant="ghost"
+                size="icon"
                 @click="showDeletePopover = true"
               />
             </DeleteConfirmPopover>
@@ -112,8 +116,9 @@ function deletePhoto(id: string) {
               </div>
             </div>
             <div class="flex flex-wrap gap-x-2 gap-y-1 md:flex-col">
+              {{ photo.tags }}
               <NuxtLinkLocale
-                v-for="tag in photo.tags?.split(',') || []"
+                v-for="tag in (photo.tags ? photo.tags.split(',') : [])"
                 :key="tag"
                 :to="`/tag/${tag}`"
                 class="m--1 p-1 rounded-lg op-80 w-fit transition-colors hover:bg-muted"

@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import type { Props as ButtonProps } from './ui/button/Button.vue'
+import type { PrimitiveProps } from 'reka-ui'
+import type { HTMLAttributes } from 'vue'
+import type { ButtonVariants } from '../ui/button'
+import { reactiveOmit } from '@vueuse/core'
+
+interface ButtonProps extends PrimitiveProps {
+  variant?: ButtonVariants['variant']
+  size?: ButtonVariants['size']
+  class?: HTMLAttributes['class']
+}
 
 defineOptions({
   inheritAttrs: false,
@@ -12,12 +21,7 @@ interface Props extends ButtonProps {
   label: string
 }
 
-const buttonProps = computed(() => {
-  const { icon: _i, label: _l, ...delegated } = props
-  delegated.variant = delegated.variant || 'ghost'
-  delegated.size = delegated.size || 'icon'
-  return delegated
-})
+const buttonProps = reactiveOmit(props, 'icon', 'label')
 
 const attrs = useAttrs()
 </script>

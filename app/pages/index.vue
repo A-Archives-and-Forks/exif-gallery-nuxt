@@ -53,6 +53,8 @@ useInfiniteScroll(window, loadMore, { distance: 320, canLoadMore: () => hasMore.
             <TooltipIconButton
               :label="$t('button.view_photo')"
               icon="i-lucide-image-upscale text-muted-foreground"
+              variant="ghost"
+              size="icon"
               @click="currentPhoto = photo.id"
             />
           </NuxtLinkLocale>

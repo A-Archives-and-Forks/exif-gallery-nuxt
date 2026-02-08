@@ -54,7 +54,7 @@ function selectProvider(providerId: string) {
     <UploadConfigCard>
       <template #status>
         <ItemStatus :label="$t('compression_config.title')" :checked="uploadConfig.enableCompression" />
-        <Card v-if="uploadConfig.enableCompression" class="px-2 flex flex-wrap gap-2">
+        <Card v-if="uploadConfig.enableCompression" class="px-2 py-0 flex flex-row gap-2">
           <ItemStatus :label="$t('compression_config.jpeg')" :checked="uploadConfig.formats.jpeg" />
           <ItemStatus :label="$t('compression_config.webp')" :checked="uploadConfig.formats.webp" />
           <ItemStatus :label="$t('compression_config.avif')" :checked="uploadConfig.formats.avif" />
@@ -203,14 +203,15 @@ function selectProvider(providerId: string) {
                       <TooltipIconButton
                         icon="i-lucide-pencil"
                         :label="$t('ai_config.edit')"
-                        size="sm"
+                        size="icon"
+                        variant="ghost"
                         @click="openEditProviderDialog(provider)"
                       />
                       <TooltipIconButton
                         v-if="provider.id !== 'openai' && provider.id !== 'gemini'"
                         icon="i-lucide-trash-2"
                         :label="$t('ai_config.delete')"
-                        size="sm"
+                        size="icon"
                         variant="destructive"
                         @click="removeProvider(provider.id)"
                       />
