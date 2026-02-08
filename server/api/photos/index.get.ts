@@ -27,8 +27,10 @@ export default eventHandler(async (event) => {
     const parts = cameraStr.split('|')
     if (parts.length === 2) {
       const [make, model] = parts
-      conditions.push(eq(schema.photo.make, make))
-      conditions.push(eq(schema.photo.model, model))
+      if (make)
+        conditions.push(eq(schema.photo.make, make))
+      if (model)
+        conditions.push(eq(schema.photo.model, model))
     }
     else {
       conditions.push(like(schema.photo.make, `%${cameraStr}%`))
