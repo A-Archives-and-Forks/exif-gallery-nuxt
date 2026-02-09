@@ -72,7 +72,7 @@ watch(() => route.name, (routeName) => {
         v-if="showLogout && loggedIn"
         :loading="disconnect"
         :label="$t('header.logout')"
-        icon="i-lucide-power text-red"
+        icon="i-lucide-power text-destructive"
         variant="ghost"
         size="icon"
         @click="clearSession()"
