@@ -67,21 +67,22 @@ function openEditDialog(photo: IPhoto) {
             <EditPhotoDialog
               :photo="selectedPhoto"
             >
-              <TooltipIconButton
-                :label="$t('button.edit')"
-                icon="i-lucide-edit"
-                variant="default"
+              <Button
+                size="icon"
                 @click="openEditDialog(photo)"
-              />
+              >
+                <div class="i-lucide-edit" />
+              </Button>
             </EditPhotoDialog>
-            <TooltipIconButton
+            <Button
               :loading="deletingPhoto === photo.id"
-              :label="$t('button.delete')"
               :disabled="!loggedIn"
-              icon="i-lucide-trash"
-              variant="default"
+              variant="destructive"
+              size="icon"
               @click="loggedIn && deletePhoto(photo.id)"
-            />
+            >
+              <div class="i-lucide-trash" />
+            </Button>
           </div>
           <img
             v-if="photo"
