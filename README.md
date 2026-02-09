@@ -2,7 +2,7 @@
 
 # EXIF Gallery Nuxt
 
-**A modern, AI-powered photo gallery built on the edge**
+**A free personal photo gallery deployable on Cloudflare, with AI image analysis and browser-side image compression**
 
 [English](README.md) | [简体中文](README_zh.md)
 
@@ -20,11 +20,13 @@
 
 ## ✨ Features
 
+- 🆓 **Free Cloudflare Deployment** - Zero-cost hosting on Cloudflare Workers with generous free tier
 - 🧠 **AI-Powered Image Intelligence** - Integration with OpenAI and Gemini for semantic analysis and intelligent image descriptions
 - 🖼️ **Smart Image Processing** - Browser-side compression supporting JPEG, WebP, and AVIF formats with automatic thumbnail generation
 - 💾 **Edge-Native Storage** - Cloudflare R2 object storage with D1 database for optimal performance and global edge deployment
 - 📊 **Complete EXIF Management** - Full extraction and display of image metadata including camera settings, location data, and timestamps
 - 🏷️ **Flexible Tagging System** - Organize photos with custom tags and filter by categories
+- 📑 **Sorting & Pagination** - Sort photos and smooth pagination
 - 🎨 **Modern User Experience** - Responsive design with smooth view transitions and beautiful UI components
 - 🔐 **Secure Admin Panel** - Built-in authentication system for secure photo management and uploads
 
