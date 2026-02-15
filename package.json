@@ -60,6 +60,7 @@
     "@iconify-json/simple-icons": "^1.2.70",
     "@nuxt/devtools": "^3.1.1",
     "@nuxt/eslint": "^1.14.0",
+    "@nuxt/fonts": "^0.14.0",
     "@nuxtjs/color-mode": "^4.0.0",
     "@nuxtjs/i18n": "^10.2.3",
     "@types/node": "^25.2.2",

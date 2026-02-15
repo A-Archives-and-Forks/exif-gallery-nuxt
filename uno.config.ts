@@ -1,5 +1,5 @@
 // unocss.config.ts
-import { defineConfig, presetIcons, presetWebFonts, presetWind4 } from 'unocss'
+import { defineConfig, presetIcons, presetWind4 } from 'unocss'
 import presetAnimations from 'unocss-preset-animations'
 import { builtinColors, presetShadcn } from 'unocss-preset-shadcn'
 
@@ -11,17 +11,16 @@ export default defineConfig({
     presetIcons({
       scale: 1.2,
     }),
-    presetWebFonts({
-      fonts: {
-        sans: 'DM Sans',
-        serif: 'DM Sans',
-        mono: 'DM Mono',
-      },
-    }),
   ],
+  theme: {
+    font: {
+      sans: 'DM Sans',
+      serif: 'DM Sans',
+      mono: 'DM Mono',
+    },
+  },
   preflights: [{
     getCSS: () => `
-*, ::before, ::after { --un-default-border-color: oklch(var(--border)); }
 .dark input[type="datetime-local"]::-webkit-calendar-picker-indicator { filter: invert(1); }
 `,
   }],
