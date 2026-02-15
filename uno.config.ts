@@ -21,6 +21,7 @@ export default defineConfig({
   },
   preflights: [{
     getCSS: () => `
+*, ::before, ::after { --un-default-border-color: oklch(var(--border)); }
 .dark input[type="datetime-local"]::-webkit-calendar-picker-indicator { filter: invert(1); }
 `,
   }],
