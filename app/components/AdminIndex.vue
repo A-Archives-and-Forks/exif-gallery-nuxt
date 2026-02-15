@@ -89,6 +89,7 @@ function openEditDialog(photo: IPhoto) {
             :src="`/photos/${getPhotoThumbnail(photo)}`"
             class="m-auto rounded-md shadow-black/50 shadow-lg object-cover"
             :class="photo.aspectRatio ? photo.aspectRatio > (4 / 3) ? 'w-full h-auto' : 'h-full w-auto' : 'h-full w-full'"
+            :alt="photo.semanticDescription || photo.caption || photo.title"
           >
         </div>
         <div class="mt-2">

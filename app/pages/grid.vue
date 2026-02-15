@@ -72,6 +72,7 @@ function getPhotoThumbnail(photo: IPhoto) {
               :src="`/photos/${getPhotoThumbnail(photo)}`"
               :class="{ 'current-image': currentPhoto === photo.id }"
               class="rounded-lg w-full aspect-[4/3] object-cover"
+              :alt="photo.semanticDescription || photo.caption || photo.title"
               @click="currentPhoto = photo.id"
             >
           </NuxtLinkLocale>
