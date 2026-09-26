@@ -1,13 +1,15 @@
-shellEmulator: true
-shamefully-hoist: true
-strict-peer-dependencies: false
-auto-install-peers: false
-strict-dep-builds: false
+minimumReleaseAgeExcludePrune: true
 
 trustPolicy: no-downgrade
 trustPolicyExclude:
   - chokidar@4.0.3 # See https://github.com/paulmillr/chokidar/issues/1440
   - semver@6.3.1 # See https://github.com/npm/node-semver/issues/838
+
+autoInstallPeers: false
+strictPeerDependencies: false
+shamefullyHoist: true
+shellEmulator: true
+strictDepBuilds: false
 
 overrides:
   nanoid: 3.3.8
@@ -15,6 +17,7 @@ overrides:
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
+  pnpm: true
   sharp: false
   simple-git-hooks: true
   unrs-resolver: true
