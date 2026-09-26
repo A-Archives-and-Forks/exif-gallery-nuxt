@@ -56,9 +56,128 @@ watch(cursorHidden, (hidden) => {
 }, { immediate: true })
 
 const randomVisited = new Set<string>()
+let preloadedForPhotoId: string | undefined
+let preloadedNextPhotoId: string | undefined
+let preloadToken = 0
 let slideshowTimer: ReturnType<typeof setTimeout> | undefined
 let slideshowTimerToken = 0
 let advancing = false
+
+function invalidatePreload() {
+  preloadToken += 1
+  preloadedForPhotoId = undefined
+  preloadedNextPhotoId = undefined
+}
+
+async function getNextPhotoIdForPreload(): Promise<string | null> {
+  const currentId = id.value
+  if (!currentId || !navStore.hasValidContext(currentId))
+    return null
+
+  if (slideshowMode.value === 'random') {
+    if (navStore.hasMore)
+      await navStore.loadMorePhotos()
+
+    const candidates = navStore.photoIds.filter(photoId => photoId !== currentId && !randomVisited.has(photoId))
+    if (candidates.length > 0)
+      return candidates[Math.floor(Math.random() * candidates.length)] ?? null
+
+    const loopCandidates = navStore.photoIds.filter(photoId => photoId !== currentId)
+    return loopCandidates[Math.floor(Math.random() * loopCandidates.length)] ?? null
+  }
+
+  const currentIndex = navStore.getCurrentIndex(currentId)
+  if (currentIndex < 0)
+    return null
+
+  if (currentIndex >= navStore.photoIds.length - 1 && navStore.hasMore)
+    await navStore.loadMorePhotos()
+
+  const nextId = navStore.photoIds[currentIndex + 1]
+  if (nextId)
+    return nextId
+
+  if (slideshowMode.value === 'loop')
+    return navStore.photoIds.find(photoId => photoId !== currentId) ?? null
+
+  return null
+}
+
+function preloadImage(photo: Pick<APIDataPhoto, 'avif' | 'webp' | 'jpeg'>) {
+  if (!import.meta.client || !document.body)
+    return
+
+  const picture = document.createElement('picture')
+  picture.style.position = 'fixed'
+  picture.style.width = '1px'
+  picture.style.height = '1px'
+  picture.style.opacity = '0'
+  picture.style.pointerEvents = 'none'
+  picture.style.overflow = 'hidden'
+  picture.setAttribute('aria-hidden', 'true')
+
+  if (photo.avif) {
+    const source = document.createElement('source')
+    source.srcset = `/photos/${photo.avif}`
+    source.type = 'image/avif'
+    picture.appendChild(source)
+  }
+  if (photo.webp) {
+    const source = document.createElement('source')
+    source.srcset = `/photos/${photo.webp}`
+    source.type = 'image/webp'
+    picture.appendChild(source)
+  }
+
+  const image = document.createElement('img')
+  const fallbackPath = photo.jpeg || photo.webp || photo.avif
+  if (!fallbackPath) {
+    picture.remove()
+    return
+  }
+
+  image.alt = ''
+  image.loading = 'eager'
+  image.decoding = 'async'
+  picture.appendChild(image)
+  document.body.appendChild(picture)
+  image.src = `/photos/${fallbackPath}`
+
+  let cleanupTimer: ReturnType<typeof setTimeout> | undefined
+  const cleanup = () => {
+    if (cleanupTimer)
+      clearTimeout(cleanupTimer)
+    picture.remove()
+  }
+  image.addEventListener('load', cleanup, { once: true })
+  image.addEventListener('error', cleanup, { once: true })
+  cleanupTimer = setTimeout(cleanup, 30_000)
+}
+
+async function preloadNextPhoto() {
+  invalidatePreload()
+  if (!slideshowPlaying.value || !photo.value || !hasContext.value)
+    return
+
+  const currentToken = preloadToken
+  const nextId = await getNextPhotoIdForPreload()
+  if (!nextId || currentToken !== preloadToken)
+    return
+
+  try {
+    const response = await $fetch<APIDataPhoto>(`/api/photos/${nextId}`, { method: 'get' })
+    if (currentToken !== preloadToken)
+      return
+
+    preloadedForPhotoId = id.value
+    preloadedNextPhotoId = nextId
+    preloadImage(response)
+  }
+  catch (error) {
+    if (currentToken === preloadToken)
+      console.error('Failed to preload next photo:', error)
+  }
+}
 
 function clearSlideshowTimer() {
   slideshowTimerToken += 1
@@ -85,13 +204,16 @@ async function goToRandomPhoto() {
   if (navStore.hasMore)
     await navStore.loadMorePhotos()
 
-  let candidates = navStore.photoIds.filter(photoId => photoId !== id.value && !randomVisited.has(photoId))
-  if (candidates.length === 0 && slideshowMode.value === 'random') {
-    randomVisited.clear()
-    candidates = navStore.photoIds.filter(photoId => photoId !== id.value)
+  let nextId = preloadedForPhotoId === id.value ? preloadedNextPhotoId : undefined
+  if (!nextId) {
+    let candidates = navStore.photoIds.filter(photoId => photoId !== id.value && !randomVisited.has(photoId))
+    if (candidates.length === 0) {
+      randomVisited.clear()
+      candidates = navStore.photoIds.filter(photoId => photoId !== id.value)
+    }
+    nextId = candidates[Math.floor(Math.random() * candidates.length)]
   }
 
-  const nextId = candidates[Math.floor(Math.random() * candidates.length)]
   if (!nextId)
     return false
 
@@ -150,13 +272,22 @@ async function advanceSlideshow(timerToken: number) {
 watch([slideshowPlaying, slideshowInterval, slideshowMode], () => {
   randomVisited.clear()
   scheduleSlideshow()
+  void preloadNextPhoto()
 })
-watch([photo, hasContext, () => route.params.id], scheduleSlideshow, { immediate: true })
+watch([photo, hasContext, () => route.params.id], () => {
+  scheduleSlideshow()
+  void preloadNextPhoto()
+}, { immediate: true })
 onBeforeRouteLeave((to) => {
-  if (to.name !== route.name)
+  if (to.name !== route.name) {
     slideshowPlaying.value = false
+    invalidatePreload()
+  }
 })
-onBeforeUnmount(clearSlideshowTimer)
+onBeforeUnmount(() => {
+  invalidatePreload()
+  clearSlideshowTimer()
+})
 
 // 移动端滑动支持
 const imageContainerRef = ref<HTMLElement>()
