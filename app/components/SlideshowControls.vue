@@ -1,10 +1,18 @@
 <script setup lang="ts">
+import { useFullscreen } from '@vueuse/core'
+
 type SlideshowMode = 'loop' | 'sequential' | 'random'
 
 const playing = defineModel<boolean>('playing', { default: false })
 const interval = defineModel<number>('interval', { default: 60 })
 const mode = defineModel<SlideshowMode>('mode', { default: 'loop' })
 
+const fullscreen = useFullscreen()
+const { isFullscreen } = fullscreen
+
+async function toggleFullscreen() {
+  await fullscreen.toggle()
+}
 const intervalOptions = [5, 15, 30, 60, 120, 300, 1800, 3600]
 const intervalValue = computed({
   get: () => String(interval.value),
@@ -28,6 +36,23 @@ const intervalValue = computed({
       </TooltipTrigger>
       <TooltipContent>
         <p>{{ playing ? $t('slideshow.pause') : $t('slideshow.play') }}</p>
+      </TooltipContent>
+    </Tooltip>
+
+    <Tooltip>
+      <TooltipTrigger as-child>
+        <Button
+          variant="ghost"
+          size="icon"
+          class="text-foreground/80 hover:bg-background/50"
+          :aria-label="isFullscreen ? $t('slideshow.exit_fullscreen') : $t('slideshow.enter_fullscreen')"
+          @click="toggleFullscreen()"
+        >
+          <div :class="isFullscreen ? 'i-lucide-minimize-2' : 'i-lucide-maximize-2'" />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{{ isFullscreen ? $t('slideshow.exit_fullscreen') : $t('slideshow.enter_fullscreen') }}</p>
       </TooltipContent>
     </Tooltip>
 

@@ -14,6 +14,8 @@ slideshow:
   play: 播放幻灯片
   pause: 暂停幻灯片
   settings: 幻灯片设置
+  enter_fullscreen: 进入全屏
+  exit_fullscreen: 退出全屏
   interval: 切换时间
   seconds: '{seconds} 秒'
   loop: 循环

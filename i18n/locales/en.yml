@@ -14,6 +14,8 @@ slideshow:
   play: Play slideshow
   pause: Pause slideshow
   settings: Slideshow settings
+  enter_fullscreen: Enter fullscreen
+  exit_fullscreen: Exit fullscreen
   interval: Change interval
   seconds: '{seconds} seconds'
   loop: Loop
