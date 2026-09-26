@@ -20,7 +20,6 @@ const currentPhoto = useState<string>('currentPhoto', () => ref(''))
 
 const LIMIT = 36
 const params = {
-  hidden: false,
   lens: lensName.value,
 }
 const { photos, hasMore, loadMore, loading } = usePhotosInfinite(params, LIMIT)
@@ -32,15 +31,11 @@ const { data: initPhotos } = await useFetch('/api/photos', {
   },
 })
 if (initPhotos.value) {
-  if (initPhotos.value.data.length < LIMIT)
-    hasMore.value = false
+  hasMore.value = initPhotos.value.hasMore
   photos.value.push(...initPhotos.value.data.map(deserializePhoto))
 }
 
 useInfiniteScroll(window, loadMore, { distance: 240, canLoadMore: () => hasMore.value })
-
-// Initial load
-onMounted(() => loadMore())
 
 // 设置导航上下文
 const { setupNavigation } = useNavigationSetup('lens', params, photos, hasMore, LIMIT)

@@ -1,5 +1,4 @@
 export function usePhotosInfinite(params?: MaybeRef<{
-  hidden?: boolean
   orderBy?: string
   order?: string
   tag?: string | string[]
@@ -50,10 +49,7 @@ export function usePhotosInfinite(params?: MaybeRef<{
         },
       })
 
-      if (response.data.length < limit) {
-        state.value.hasMore.value = false
-      }
-
+      state.value.hasMore.value = response.hasMore
       state.value.photos.value.push(...response.data.map(deserializePhoto))
     }
     catch (err: any) {

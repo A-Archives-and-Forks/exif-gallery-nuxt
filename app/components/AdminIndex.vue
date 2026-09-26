@@ -8,7 +8,6 @@ const { orderBy, order } = usePhotoSort()
 
 const LIMIT = 36
 const params = computed(() => ({
-  hidden: false,
   orderBy: orderBy.value,
   order: order.value,
 }))

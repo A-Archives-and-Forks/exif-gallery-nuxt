@@ -28,7 +28,6 @@ export default defineEventHandler(async (event) => {
     longitude: z.number().optional(),
     priorityOrder: z.number().optional(),
     takenAt: z.string().optional(),
-    hidden: z.boolean().optional(),
   })
 
   const body = await useValidatedBody(event, updatableFields)

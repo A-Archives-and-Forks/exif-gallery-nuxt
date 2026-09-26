@@ -11,7 +11,6 @@ const { orderBy, order } = usePhotoSort()
 
 const LIMIT = 6
 const params = computed(() => ({
-  hidden: false,
   orderBy: orderBy.value,
   order: order.value,
   search: route.query.search as string | undefined,
@@ -28,8 +27,7 @@ const { data: initPhotos } = await useFetch('/api/photos', {
   },
 })
 if (initPhotos.value) {
-  if (initPhotos.value.data.length < LIMIT)
-    hasMore.value = false
+  hasMore.value = initPhotos.value.hasMore
   photos.value = initPhotos.value.data.map(deserializePhoto)
 }
 

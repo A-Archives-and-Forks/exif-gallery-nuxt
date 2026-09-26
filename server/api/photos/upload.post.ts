@@ -114,7 +114,6 @@ export default eventHandler(async (event) => {
       aspectRatio: Number(formData.get('aspectRatio')) || 1.5,
       // Photo config
       priorityOrder: Number(formData.get('priorityOrder')) || null,
-      hidden: Boolean(formData.get('hidden')) || false,
     }
 
     try {

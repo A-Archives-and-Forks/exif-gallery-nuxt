@@ -36,13 +36,14 @@ export const photo = sqliteTable('photos', {
   aspectRatio: real('aspect_ratio'),
   // photo config
   priorityOrder: real('priority_order'),
+  // hidden 字段暂保留以兼容历史数据，但图库查询不再使用隐藏功能
   hidden: integer('hidden', { mode: 'boolean' }).default(false),
   // sql default
   updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
   createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
 }, table => [
   index('idx_photos_taken_at').on(table.takenAt),
-  index('idx_photos_hidden').on(table.hidden),
+  index('idx_photos_created_at').on(table.createdAt),
   index('idx_photos_priority_order').on(table.priorityOrder),
 ])
 
@@ -68,5 +69,5 @@ export const photoTag = sqliteTable('photo_tags', {
 }, table => [
   primaryKey({ columns: [table.photoId, table.tagId] }),
   index('idx_photo_tags_photo_id').on(table.photoId),
-  index('idx_photo_tags_tag_id').on(table.tagId),
+  index('idx_photo_tags_tag_id_photo_id').on(table.tagId, table.photoId),
 ])

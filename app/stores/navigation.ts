@@ -10,7 +10,6 @@ export interface NavigationContext {
     lens?: string
     orderBy?: string
     order?: string
-    hidden?: boolean
   }
 }
 
@@ -131,10 +130,7 @@ export const useNavigationStore = defineStore('navigation', () => {
 
       const newPhotos = (response.data as unknown as SerializeObject<APIDataPhoto>[]).map(deserializePhoto)
 
-      if (newPhotos.length < limit.value) {
-        hasMore.value = false
-      }
-
+      hasMore.value = response.hasMore
       photoIds.value.push(...newPhotos.map(p => p.id))
       offset.value += newPhotos.length
     }
