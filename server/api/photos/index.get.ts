@@ -1,7 +1,10 @@
 import { db } from '@nuxthub/db'
 import { and, asc, desc, eq, inArray, like, or, sql } from 'drizzle-orm'
+import { setGalleryPhotosCacheHeaders } from '../../utils/cache'
 
 export default eventHandler(async (event) => {
+  setGalleryPhotosCacheHeaders(event)
+
   const query = getQuery(event)
   const {
     limit = 20,

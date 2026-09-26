@@ -1,6 +1,7 @@
 import type { Photo } from '~~/server/utils/drizzle'
 import { blob } from '@nuxthub/blob'
 import { db } from '@nuxthub/db'
+import { purgeGalleryCache } from '../../utils/cache'
 
 interface UploadFile {
   file: File
@@ -130,6 +131,7 @@ export default eventHandler(async (event) => {
 
       const photoId = newPhoto[0]!.id
       await processPhotoTags(photoId, photoEntry.tags)
+      await purgeGalleryCache(event)
     }
     catch (error) {
       console.error('Failed to insert photo into database:', error)

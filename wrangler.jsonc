@@ -10,6 +10,9 @@
   "observability": {
     "enabled": true
   },
+  "cache": {
+    "enabled": true
+  },
   "r2_buckets": [
     {
       "binding": "BLOB",

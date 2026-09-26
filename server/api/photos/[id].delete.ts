@@ -1,6 +1,7 @@
 import { blob } from '@nuxthub/blob'
 import { db } from '@nuxthub/db'
 import { eq, inArray, sql } from 'drizzle-orm'
+import { purgeGalleryCache } from '../../utils/cache'
 
 export default eventHandler(async (event) => {
   await requireUserSession(event)
@@ -68,5 +69,6 @@ export default eventHandler(async (event) => {
     })
   }
 
+  await purgeGalleryCache(event)
   return { success: true }
 })

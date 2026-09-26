@@ -1,6 +1,7 @@
 import { db } from '@nuxthub/db'
 import { eq } from 'drizzle-orm'
 import { useValidatedBody, useValidatedParams, z } from 'h3-zod'
+import { purgeGalleryCache } from '../../utils/cache'
 
 export default defineEventHandler(async (event) => {
   await requireUserSession(event)
@@ -45,6 +46,7 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 404, message: 'photo not found' })
 
     await processPhotoTags(id, body.tags)
+    await purgeGalleryCache(event)
 
     return updatedPhoto[0]
   }
