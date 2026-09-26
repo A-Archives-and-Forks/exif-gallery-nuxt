@@ -4,6 +4,7 @@ import { useFullscreen } from '@vueuse/core'
 type SlideshowMode = 'loop' | 'sequential' | 'random'
 
 const playing = defineModel<boolean>('playing', { default: false })
+const keepScreenAwake = defineModel<boolean>('keepScreenAwake', { default: false })
 const interval = defineModel<number>('interval', { default: 60 })
 const mode = defineModel<SlideshowMode>('mode', { default: 'loop' })
 
@@ -87,6 +88,13 @@ const intervalValue = computed({
                     </SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div class="px-2 py-1.5 rounded-md bg-muted flex gap-2 items-center">
+                <Checkbox id="slideshow-keep-screen-awake" v-model="keepScreenAwake" />
+                <Label for="slideshow-keep-screen-awake" class="flex-1 cursor-pointer">
+                  {{ $t('slideshow.keep_awake') }}
+                </Label>
               </div>
 
               <div class="space-y-2">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core'
+import { useLocalStorage, useWakeLock } from '@vueuse/core'
 import { cn } from '@/lib/utils'
 
 type SlideshowMode = 'loop' | 'sequential' | 'random'
@@ -46,8 +46,18 @@ const { hasContext, canGoPrev, canGoNext, loading, goPrev, goNext }
 const navStore = useNavigationStore()
 
 const slideshowPlaying = useState('slideshow-playing', () => false)
+const slideshowKeepAwake = useLocalStorage('slideshow-keep-screen-awake', false)
+const { request: requestWakeLock, release: releaseWakeLock } = useWakeLock()
 const slideshowInterval = useLocalStorage('slideshow-interval-seconds', 60)
 const slideshowMode = useLocalStorage<SlideshowMode>('slideshow-playback-mode', 'loop')
+
+const shouldKeepScreenAwake = computed(() => slideshowPlaying.value && slideshowKeepAwake.value)
+watch(shouldKeepScreenAwake, (keepAwake) => {
+  if (keepAwake)
+    void requestWakeLock('screen').catch(() => {})
+  else
+    void releaseWakeLock().catch(() => {})
+}, { immediate: true })
 
 const cursorHidden = computed(() => slideshowPlaying.value && idle.value)
 watch(cursorHidden, (hidden) => {
@@ -319,6 +329,7 @@ const { isSwiping, direction } = useSwipe(imageContainerRef, {
     >
       <SlideshowControls
         v-model:playing="slideshowPlaying"
+        v-model:keep-screen-awake="slideshowKeepAwake"
         v-model:interval="slideshowInterval"
         v-model:mode="slideshowMode"
       />

@@ -22,6 +22,7 @@ slideshow:
   mode: Playback mode
   sequential: Sequential
   random: Random
+  keep_awake: Keep screen awake
 header:
   github: View project on GitHub
   admin: Admin Panel
