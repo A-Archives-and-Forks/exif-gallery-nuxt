@@ -318,7 +318,7 @@ const { isSwiping, direction } = useSwipe(imageContainerRef, {
   <section
     v-if="photo"
     ref="imageContainerRef"
-    class="relative overflow-hidden h-dvh"
+    class="bg-white relative overflow-hidden h-dvh dark:bg-black"
   >
     <div
       v-if="hasContext"
