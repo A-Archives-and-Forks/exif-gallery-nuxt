@@ -10,6 +10,16 @@ button:
   view_photo: View Photo
   cancel: Cancel
   confirm_delete: Confirm Delete
+slideshow:
+  play: Play slideshow
+  pause: Pause slideshow
+  settings: Slideshow settings
+  interval: Change interval
+  seconds: '{seconds} seconds'
+  loop: Loop
+  mode: Playback mode
+  sequential: Sequential
+  random: Random
 header:
   github: View project on GitHub
   admin: Admin Panel

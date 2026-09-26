@@ -10,6 +10,16 @@ button:
   view_photo: 查看图片详情
   cancel: 取消
   confirm_delete: 确认删除
+slideshow:
+  play: 播放幻灯片
+  pause: 暂停幻灯片
+  settings: 幻灯片设置
+  interval: 切换时间
+  seconds: '{seconds} 秒'
+  loop: 循环
+  mode: 播放模式
+  sequential: 顺序
+  random: 随机
 header:
   github: 在 GitHub 上查看项目
   admin: 管理面板
