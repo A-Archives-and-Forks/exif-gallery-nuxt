@@ -85,12 +85,12 @@ function getPhotoThumbnail(photo: IPhoto) {
           />
         </template>
       </div>
-      <div class="flex-shrink-0 h-min right-4 top-29 fixed md:top-16 md:sticky lt-md:z-40">
+      <div class="flex-shrink-0 h-min right-4 top-29 fixed md:pointer-events-auto lt-md:pointer-events-none md:top-16 md:sticky lt-md:z-40">
         <ScrollAreaDynamic
           class="rounded-md bg-card flex max-h-[calc(100dvh-8.25rem)] transition-transform duration-300 ease-in-out lt-md:p-4 md:bg-background md:max-h-[calc(100dvh-5rem)]"
           :class="cn(
             'lt-md:translate-x-[calc(100%_+_4rem)] md:shadow-none',
-            { 'lt-md:translate-x-0 lt-md:shadow-lg lt-md:border border-input': isDrawerOpen },
+            { 'lt-md:translate-x-0 lt-md:shadow-lg lt-md:border border-input lt-md:pointer-events-auto': isDrawerOpen },
           )"
         >
           <Tags />
